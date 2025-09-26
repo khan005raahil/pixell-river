@@ -104,5 +104,46 @@ describe('Employee Routes', () => {
     });
   });
 
+  describe('DELETE /api/v1/employees/:id', () => {
+    it('should delete employee successfully', async () => {
+      // Arrange
+      const id = employees[employees.length - 1].id; // Last one to avoid affecting others
+      // Act
+      const response = await request(app).delete(`/api/v1/employees/${id}`);
+      // Assert
+      expect(response.status).toBe(204);
+    });
+
+    it('should return 400 if missing or invalid ID', async () => {
+      // Arrange
+      // Act
+      const response = await request(app).delete('/api/v1/employees/invalid');
+      // Assert
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('Missing or invalid ID');
+    });
+  });
+
+  describe('GET /api/v1/employees/branch/:branchId', () => {
+    it('should return employees by branch successfully', async () => {
+      // Arrange
+      const branchId = 1;
+      // Act
+      const response = await request(app).get(`/api/v1/employees/branch/${branchId}`);
+      // Assert
+      expect(response.status).toBe(200);
+      expect(Array.isArray(response.body)).toBe(true);
+    });
+
+    it('should return 400 if missing or invalid branch ID', async () => {
+      // Arrange
+      // Act
+      const response = await request(app).get('/api/v1/employees/branch/invalid');
+      // Assert
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('Missing or invalid branch ID');
+    });
+  });
+
   
 });
