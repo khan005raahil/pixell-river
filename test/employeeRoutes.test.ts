@@ -145,5 +145,24 @@ describe('Employee Routes', () => {
     });
   });
 
-  
+  describe('GET /api/v1/employees/department/:department', () => {
+    it('should return employees by department successfully', async () => {
+        // Arrange
+        const department = 'Management';
+        // Act
+        const response = await request(app).get(`/api/v1/employees/department/${department}`);
+        // Assert
+        expect(response.status).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+    });
+
+    it('should return 400 if missing department', async () => {
+        // Arrange
+        // Act
+        const response = await request(app).get('/api/v1/employees/department'); 
+        // Assert
+        expect(response.status).toBe(400);
+        expect(response.body.error).toBe('Missing department');
+    });
+    });
 });
