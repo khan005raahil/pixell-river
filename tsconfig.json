@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "commonjs",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./dist",
+        "resolveJsonModule": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "alwaysStrict": true,
+        "sourceMap": true, // Added for debugging
+        "baseUrl": "./",
+        "paths": {
+            "*": ["*"]
+        }
+    },
+    "include": ["src/**/*", "test/**/*"], // Removed config/**/* if not used
+    "exclude": ["node_modules", "dist"]
+}
