@@ -63,5 +63,46 @@ describe('Branch Routes', () => {
     });
   });
 
-  
+  describe('PUT /api/v1/branches/:id', () => {
+    it('should update branch successfully', async () => {
+      // Arrange
+      const id = 1;
+      const updateData = { address: 'Updated Address' };
+      // Act
+      const response = await request(app).put(`/api/v1/branches/${id}`).send(updateData);
+      // Assert
+      expect(response.status).toBe(200);
+      expect(response.body.address).toBe(updateData.address);
+    });
+
+    it('should return 400 if no update data provided', async () => {
+      // Arrange
+      const id = 1;
+      // Act
+      const response = await request(app).put(`/api/v1/branches/${id}`).send({});
+      // Assert
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('No update data provided');
+    });
+  });
+
+  describe('DELETE /api/v1/branches/:id', () => {
+    it('should delete branch successfully', async () => {
+      // Arrange
+      const id = branches[branches.length - 1].id; // Last one
+      // Act
+      const response = await request(app).delete(`/api/v1/branches/${id}`);
+      // Assert
+      expect(response.status).toBe(204);
+    });
+
+    it('should return 400 if missing or invalid ID', async () => {
+      // Arrange
+      // Act
+      const response = await request(app).delete('/api/v1/branches/invalid');
+      // Assert
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('Missing or invalid ID');
+    });
+  });
 });
