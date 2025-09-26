@@ -81,5 +81,28 @@ describe('Employee Routes', () => {
     });
   });
 
+  describe('PUT /api/v1/employees/:id', () => {
+    it('should update employee successfully', async () => {
+      // Arrange
+      const id = 1;
+      const updateData = { position: 'Updated Position' };
+      // Act
+      const response = await request(app).put(`/api/v1/employees/${id}`).send(updateData);
+      // Assert
+      expect(response.status).toBe(200);
+      expect(response.body.position).toBe(updateData.position);
+    });
+
+    it('should return 400 if no update data provided', async () => {
+      // Arrange
+      const id = 1;
+      // Act
+      const response = await request(app).put(`/api/v1/employees/${id}`).send({});
+      // Assert
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('No update data provided');
+    });
+  });
+
   
 });
