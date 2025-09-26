@@ -30,4 +30,38 @@ describe('Branch Routes', () => {
     });
   });
 
+  describe('GET /api/v1/branches', () => {
+    it('should return all branches successfully', async () => {
+      // Arrange
+      // Act
+      const response = await request(app).get('/api/v1/branches');
+      // Assert
+      expect(response.status).toBe(200);
+      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('GET /api/v1/branches/:id', () => {
+    it('should return branch by ID successfully', async () => {
+      // Arrange
+      const id = 1; // Assuming sample data has ID 1
+      // Act
+      const response = await request(app).get(`/api/v1/branches/${id}`);
+      // Assert
+      expect(response.status).toBe(200);
+      expect(response.body.id).toBe(id);
+    });
+
+    it('should return 400 if missing or invalid ID', async () => {
+      // Arrange
+      // Act
+      const response = await request(app).get('/api/v1/branches/invalid');
+      // Assert
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('Missing or invalid ID');
+    });
+  });
+
   
+});
